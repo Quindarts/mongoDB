@@ -87,3 +87,48 @@ db.Xe.update(
     }
 )
 
+//9. Tất cả xe Ford có năm sản xuất từ trước năm 2000 được cập nhật ngày bán là ngày hiện hành.
+db.xe.updateMany(
+    {
+        $and: [
+            {
+                ten : 'Ford'
+            },
+            {
+                namsx: { $lt: 2000}
+            }
+        ]
+    },
+    {
+        $set: {
+            ngayban : new Date()
+        }
+    }
+)
+
+// 10. Đổi tất cả tên thuộc tính của tất cả các document trong collection Xe sang English 
+// (Ví dụ: tenname,namsxyear, loai categories, …)
+db.xe.updateMany(
+    {},
+    {
+        $rename: {
+            'ma' : 'id',
+            'ten' : 'name',
+            'namsv' : 'year',
+            'hinhanh': 'image',
+            'loai': 'categories'
+        }
+    }
+)
+
+// 11. Các xe Ford được cập nhật thêm thuộc tính như sau soluong(20,30,50).
+db.xe.updateMany(
+    {
+        ten: {$eq :  'Ford'}
+    },
+    {
+        $set: {
+            soluong : [20, 30, 50]
+        }
+    }
+)
